@@ -1,1 +1,50 @@
-Add profles
+# Add profles
+proxies:
+  - name: "vmess-proxy"
+    type: vmess
+    server: tranvxxz.top
+    port: 443
+    uuid: 0b4d7de6-aa52-67df-4365-8602f18095d0
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    servername: tranvxxz.top
+    network: ws
+    ws-opts:
+      path: "/api"
+      headers:
+        Host: tranvxxz.top
+
+dns:
+  enable: true
+  listen: 127.0.0.1:53
+  default-nameserver:
+    - 8.8.8.8
+    - 1.1.1.1
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  nameserver:
+    - 223.5.5.5
+    - https://dns.google
+    - 8.8.8.8
+    - 1.1.1.1
+
+proxy-groups:
+  - name: "Auto"
+    type: select
+    proxies:
+      - "vmess-proxy"
+      - DIRECT
+  - name: "Manual"
+    type: select
+    proxies:
+      - "vmess-proxy"
+      - DIRECT
+
+rules:
+  - DOMAIN-SUFFIX,google.com,Auto
+  - DOMAIN-SUFFIX,youtube.com,Auto
+  - DOMAIN-SUFFIX,facebook.com,Auto
+  - GEOIP,CN,DIRECT
+  - MATCH,Auto
